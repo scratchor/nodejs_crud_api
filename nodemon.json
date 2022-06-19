@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "watch": ["src"],
+  "exec": "npm start",
+  "ignore": ["node_modules", "dist"],
+  "ext": "ts",
+  "events": {
+    "start": "cls || clear"
+  }
+}
