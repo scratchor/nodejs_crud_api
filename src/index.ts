@@ -6,31 +6,22 @@ import uncaughtError from './uncaughtError.js';
 dotenv.config();
 uncaughtError();
 
-const generalUrl = '/api/users';
-const PORT = process.env.PORT || 5000;
-console.log(process.env.NODE_ENV);
+const PORT = process.env.PORT || 3000;
+
 const server = http.createServer(async (req: http.IncomingMessage, res: http.ServerResponse): Promise<void> => {
-  console.log(req.url && req.url.startsWith(generalUrl));
-  if (req.url && req.url.startsWith(generalUrl)) {
-    await processRequest(req, res);
-  }
-
-  // if (req.url === '/api' && req.method === 'GET') {
-  //   // response headers
-  //   res.writeHead(200, { 'Content-Type': 'application/json' });
-  //   // set the response
-  //   res.write('Hi there, This is a Vanilla Node.js API');
-  //   // end the response
-  //   res.end();
-  // }
-
-  // If no route present
-  else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: 'Page not found' }));
+  try {
+    if (req.url && req.url.startsWith('/api/users')) {
+      await processRequest(req, res);
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Sorry, such endpoint not found' }));
+    }
+  } catch (err: unknown) {
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: (err as Error).message }));
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`server started on port: ${PORT}`);
+  console.info(`server started on port: ${PORT}`);
 });
