@@ -8,7 +8,7 @@
       DELETE   /api/users/id
 
 - ### Example :
-      GET http://localhost:3000/api/users- to get all users
+      GET http://localhost:3000/api/users - to get all users
 
 - ###Install
       npm install
